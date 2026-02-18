@@ -130,4 +130,28 @@ describe('SidebarContent', () => {
       expect(pushMock).toHaveBeenCalledWith('/new');
     });
   });
+
+  describe('Search', () => {
+    it('should navigate with coded URL when typing and clearing input', async () => {
+      // Given
+      const text = 'A B';
+      renderSut();
+      const searchInput = screen.getByPlaceholderText('Buscar sessões...');
+
+      // When
+      await user.type(searchInput, text);
+
+      // Then
+      expect(pushMock).toHaveBeenCalled();
+      const lastCall = pushMock.mock.calls.at(-1);
+      expect(lastCall?.[0]).toBe('/?q=A%20B');
+
+      // And When
+      await user.clear(searchInput);
+
+      // Then
+      const lastClearCall = pushMock.mock.calls.at(-1);
+      expect(lastClearCall?.[0]).toBe('/');
+    });
+  });
 });

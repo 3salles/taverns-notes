@@ -7,7 +7,7 @@ import {
   X as CloseButton,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { ChangeEvent, startTransition, useState } from 'react';
 import { Logo } from '../logo';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -22,10 +22,23 @@ export interface SidebarContentProps {
 
 export const SidebarContent = ({ sessions }: SidebarContentProps) => {
   const router = useRouter();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [query, setQuery] = useState('');
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
   const handleNewSession = () => router.push('/new');
+
+  const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newQuery = event.target.value;
+    setQuery(newQuery);
+
+    startTransition(() => {
+      const url = newQuery ? `/?q=${encodeURIComponent(newQuery)}` : '/';
+
+      router.push(url, { scroll: false });
+    });
+  };
 
   //REFACTOR - Adicionar early return para melhor legibilidade
   return (
@@ -91,6 +104,8 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
                   type="text"
                   placeholder="Buscar sessões..."
                   autoFocus
+                  onChange={handleQueryChange}
+                  value={query}
                 />
               </form>
             </section>
