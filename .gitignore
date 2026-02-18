@@ -49,3 +49,4 @@ next-env.d.ts
 
 # git cz
 changelog.config.js
+/src/generated/prisma

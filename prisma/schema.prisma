@@ -16,7 +16,7 @@ datasource db {
 model Session {
   id          String   @id @default(cuid())
   title       String
-  notes       String
+  note        String
   sessionDate DateTime
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")

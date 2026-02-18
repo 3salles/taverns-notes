@@ -10,8 +10,16 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Logo } from '../logo';
 import { Button } from '../ui/button';
+interface ISession {
+  title: string;
+  id: string;
+  note: string;
+}
+export interface SidebarContentProps {
+  sessions: ISession[];
+}
 
-export const SidebarContent = () => {
+export const SidebarContent = ({ sessions }: SidebarContentProps) => {
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -84,6 +92,10 @@ export const SidebarContent = () => {
           </section>
         </>
       )}
+
+      {sessions.map((session) => (
+        <p key={session.id}>{session.title}</p>
+      ))}
     </aside>
   );
 };

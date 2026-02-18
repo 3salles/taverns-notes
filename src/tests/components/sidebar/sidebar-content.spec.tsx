@@ -1,4 +1,7 @@
-import { SidebarContent } from '@/components/sidebar/sidebar-content';
+import {
+  SidebarContent,
+  SidebarContentProps,
+} from '@/components/sidebar/sidebar-content';
 import { render, screen } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
 
@@ -8,20 +11,56 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }));
 
-const renderSut = () => render(<SidebarContent />);
+const sessionsMock = [
+  {
+    id: '1',
+    title: 'Title 01',
+    note: 'Content 01',
+  },
+];
+
+const renderSut = (
+  { sessions = sessionsMock }: SidebarContentProps = {} as SidebarContentProps
+) => render(<SidebarContent sessions={sessions} />);
 
 describe('SidebarContent', () => {
   beforeEach(() => {
     pushMock.mockClear();
   });
 
-  it("should render the sidebar and the 'Nova Sessão' button", () => {
-    // Given
-    renderSut();
+  describe('base', () => {
+    it("should render the sidebar and the 'Nova Sessão' button", () => {
+      // Given
+      renderSut();
 
-    // Then
-    expect(screen.getByRole('complementary')).toBeVisible();
-    expect(screen.getByRole('button', { name: /nova sessão/i })).toBeVisible();
+      // Then
+      expect(screen.getByRole('complementary')).toBeVisible();
+      expect(
+        screen.getByRole('button', { name: /nova sessão/i })
+      ).toBeVisible();
+    });
+
+    it('should list sessions', () => {
+      const sessionsListMock = [
+        {
+          id: '1',
+          title: 'Title 01',
+          note: 'Content 01',
+        },
+        {
+          id: '2',
+          title: 'Title 02',
+          note: 'Content 02',
+        },
+      ];
+
+      renderSut({ sessions: sessionsListMock });
+
+      expect(screen.getByText(sessionsListMock[0].title)).toBeInTheDocument();
+      expect(screen.getAllByRole('paragraph')).toHaveLength(
+        sessionsListMock.length
+      );
+    });
   });
 
   describe('Collapse and expand', () => {
