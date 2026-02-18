@@ -117,6 +117,42 @@ describe('SidebarContent', () => {
         screen.queryByRole('button', { name: /minimizar sidebar/i })
       ).not.toBeInTheDocument();
     });
+
+    it("should show 'Nova Sessão' button when sidebar is collapsed", async () => {
+      // Given
+      renderSut();
+
+      const collapseButton = screen.getByRole('button', {
+        name: /minimizar sidebar/i,
+      });
+
+      // When
+      await user.click(collapseButton);
+
+      // Then
+      const newSessionButton = screen.getByRole('button', {
+        name: /nova sessão/i,
+      });
+      expect(newSessionButton).toBeVisible();
+    });
+
+    it('should NOT show sessions list when sidebar is collapsed', async () => {
+      // Given
+      renderSut();
+
+      const collapseButton = screen.getByRole('button', {
+        name: /minimizar sidebar/i,
+      });
+
+      // When
+      await user.click(collapseButton);
+
+      // Then
+      const nav = screen.queryByRole('navigation', {
+        name: /lista de sessões/i,
+      });
+      expect(nav).not.toBeInTheDocument();
+    });
   });
 
   describe('New session navigation', () => {
