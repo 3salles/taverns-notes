@@ -1,5 +1,6 @@
 'use client';
 
+import { ISessionSummary } from '@/core/domain/sessions/session.entity';
 import {
   Plus as AddIcon,
   ArrowLeftToLine,
@@ -11,13 +12,10 @@ import { ChangeEvent, startTransition, useState } from 'react';
 import { Logo } from '../logo';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-interface ISession {
-  title: string;
-  id: string;
-  note: string;
-}
+import { SessionList } from '../ui/session';
+
 export interface SidebarContentProps {
-  sessions: ISession[];
+  sessions: ISessionSummary[];
 }
 
 export const SidebarContent = ({ sessions }: SidebarContentProps) => {
@@ -121,9 +119,7 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
         </>
       )}
 
-      {sessions.map((session) => (
-        <p key={session.id}>{session.title}</p>
-      ))}
+      <SessionList sessions={sessions} />
     </aside>
   );
 };

@@ -14,7 +14,6 @@ export function buildSession(
   overrides: BuildSessionOverrides = {}
 ): SessionCreateManyInput {
   return {
-    id: faker.string.uuid(),
     title: `Sessão ${faker.number.int({ min: 1, max: 20 })} - ${faker.lorem.paragraph(1)}`,
     note: [
       `Resumo: ${faker.lorem.sentences(2)}`,
