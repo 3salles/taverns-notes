@@ -23,7 +23,8 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body
-        className={`${inter.variable} antialiased bg-gray-900 text-white flex h-screen`}
+        className={`${inter.variable} antialiased bg-gray-900 
+      text-white flex h-screen`}
       >
         <Sidebar />
         <main className="relative flex-1 overflow-auto min-w-0">

@@ -1,7 +1,5 @@
 'use client';
 
-import { searchSessionAction } from '@/app/actions/session.actions';
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
 import {
   Plus as AddIcon,
   ArrowLeftToLine,
@@ -17,11 +15,15 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Logo } from '../logo';
+
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { SessionList } from '../ui/session';
 import { Spinner } from '../ui/spinner';
+
+import { searchSessionAction } from '@/app/actions/session.actions';
+import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { Logo } from '../logo';
+import { SessionList } from '../session';
 
 export interface SidebarContentProps {
   sessions: ISessionSummary[];
@@ -45,7 +47,7 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
   const sessionList = hasQuery ? (searchState.sessions ?? sessions) : sessions;
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
-  const handleNewSession = () => router.push('/new');
+  const handleNewSession = () => router.push('/new-session');
 
   const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newQuery = event.target.value;

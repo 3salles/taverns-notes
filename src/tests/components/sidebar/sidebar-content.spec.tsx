@@ -183,7 +183,7 @@ describe('SidebarContent', () => {
   });
 
   describe('New session navigation', () => {
-    it("should navigate to /new when the user clicks on 'Nova Sessão'", async () => {
+    it("should navigate to /new-session when the user clicks on 'Nova Sessão'", async () => {
       // Given
       const user = userEvent.setup();
       renderSut();
@@ -192,7 +192,7 @@ describe('SidebarContent', () => {
       await user.click(screen.getByRole('button', { name: /nova sessão/i }));
 
       // Then
-      expect(pushMock).toHaveBeenCalledWith('/new');
+      expect(pushMock).toHaveBeenCalledWith('/new-session');
     });
   });
 
