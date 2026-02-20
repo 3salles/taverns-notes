@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 
 const pushMock = jest.fn();
 let mockSearchParams = new URLSearchParams();
+let user: ReturnType<typeof userEvent.setup>;
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
@@ -97,6 +98,32 @@ describe('SidebarContent', () => {
       expect(
         screen.queryByRole('button', { name: /expandir sidebar/i })
       ).not.toBeInTheDocument();
+    });
+
+    it('should expand sidebar when it is collapsed when click the expand button', async () => {
+      renderSut();
+      const collapsedButton = screen.getByRole('button', {
+        name: /minimizar sidebar/i,
+      });
+
+      await user.click(collapsedButton);
+
+      const expandButton = screen.getByRole('button', {
+        name: /expandir sidebar/i,
+      });
+
+      await user.click(expandButton);
+
+      expect(
+        screen.getByRole('button', {
+          name: /minimizar sidebar/i,
+        })
+      ).toBeVisible();
+      expect(
+        screen.getByRole('navigation', {
+          name: /lista de sessões/i,
+        })
+      ).toBeVisible();
     });
 
     it('should collapse the sidebar and show the expand button', async () => {
@@ -190,6 +217,35 @@ describe('SidebarContent', () => {
       // Then
       const lastClearCall = pushMock.mock.calls.at(-1);
       expect(lastClearCall?.[0]).toBe('/');
+    });
+
+    it('should submit form when user type in search input', async () => {
+      const submitSpy = jest
+        .spyOn(HTMLFormElement.prototype, 'requestSubmit')
+        .mockImplementation(() => undefined);
+      renderSut();
+
+      const searchInput = screen.getByPlaceholderText('Buscar sessões...');
+
+      await user.type(searchInput, '01');
+
+      expect(submitSpy).toHaveBeenCalled();
+      submitSpy.mockRestore();
+    });
+
+    it('should submit automatic on mount when there is query', async () => {
+      const submitSpy = jest
+        .spyOn(HTMLFormElement.prototype, 'requestSubmit')
+        .mockImplementation(() => undefined);
+      renderSut();
+
+      const text = 'text';
+      const searchParams = new URLSearchParams(`q=${text}`);
+      mockSearchParams = searchParams;
+      renderSut();
+
+      expect(submitSpy).toHaveBeenCalled();
+      submitSpy.mockRestore();
     });
   });
 

@@ -13,6 +13,7 @@ import {
   ChangeEvent,
   startTransition,
   useActionState,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -58,12 +59,21 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
     });
   };
 
+  useEffect(() => {
+    if (!hasQuery) {
+      return;
+    }
+
+    formRef.current?.requestSubmit();
+  }, [hasQuery]);
+
   //REFACTOR - Adicionar early return para melhor legibilidade
   return (
     <aside
       className={`border-r border-gray-700 flex flex-col h-full bg-gray-800 
     transition-[transform,width] duration-300 ease-in-out fixed md:relative 
-    left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] ${isCollapsed ? 'md:w-18' : 'md:w-[384px]'}`}
+    left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] 
+    ${isCollapsed ? 'md:w-18' : 'md:w-[384px]'}`}
     >
       {isCollapsed && (
         <section className="px-2 py-6">
