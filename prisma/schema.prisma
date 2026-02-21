@@ -17,7 +17,7 @@ model Session {
   id          String   @id @default(cuid())
   title       String
   note        String
-  sessionDate DateTime
+  sessionDate DateTime @updatedAt @map("session_date")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
