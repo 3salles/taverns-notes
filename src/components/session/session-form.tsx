@@ -10,6 +10,7 @@ import {
   CreateSessionDTO,
   CreateSessionSchema,
 } from '@/core/application/session/create-session.dto';
+import { CopyButton } from '../button-actions';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
@@ -17,6 +18,7 @@ import { Textarea } from '../ui/textarea';
 
 export const SessionForm = () => {
   const router = useRouter();
+
   const sessionForm = useForm<CreateSessionDTO>({
     resolver: zodResolver(CreateSessionSchema),
     defaultValues: {
@@ -24,6 +26,7 @@ export const SessionForm = () => {
       note: '',
     },
   });
+  const content = sessionForm.watch('note');
 
   const submitSessionForm = async (data: CreateSessionDTO) => {
     const result = await createSessionAction(data);
@@ -44,6 +47,7 @@ export const SessionForm = () => {
         onSubmit={sessionForm.handleSubmit(submitSessionForm)}
       >
         <header className="flex flex-wrapper gap-2 items-center mb-6 justify-end">
+          <CopyButton content={content} />
           <Button type="submit" size="sm">
             Salvar
           </Button>
