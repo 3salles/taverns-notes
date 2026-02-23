@@ -78,4 +78,15 @@ describe('SessionForm', () => {
     expect(toast.error).toHaveBeenCalledWith(errorMessage);
     expect(refreshMock).not.toHaveBeenCalledTimes(1);
   });
+
+  it('should show error message when try save empty form', async () => {
+    renderSut();
+
+    const submitButton = screen.getByRole('button', { name: /salvar/i });
+    await user.click(submitButton);
+
+    expect(screen.getByText('Título é obrigatório')).toBeVisible();
+    expect(screen.getByText('Conteúdo é obrigatório')).toBeVisible();
+    expect(createActionMock).not.toHaveBeenCalled();
+  });
 });

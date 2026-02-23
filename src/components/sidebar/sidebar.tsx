@@ -1,9 +1,20 @@
+import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { PrismaSessionRepository } from '@/infra/repository/prisma-session.repository';
 import { prisma } from '@/lib/prisma';
 import { SidebarContent } from './sidebar-content';
 
 export const Sidebar = async () => {
-  //TODO - Ajustar para lidar quando não tem conexão com o banco
-  const sessions = await prisma.session.findMany();
+  const sessionRepository = new PrismaSessionRepository(prisma);
+  let initialSessions: ISessionSummary[] = [];
 
-  return <SidebarContent sessions={sessions} />;
+  try {
+    const sessions = await sessionRepository.findMany();
+    initialSessions = sessions.map((session) => ({
+      ...session,
+    }));
+  } catch {
+    initialSessions = [];
+  }
+
+  return <SidebarContent sessions={initialSessions} />;
 };
