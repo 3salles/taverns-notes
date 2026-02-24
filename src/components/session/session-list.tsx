@@ -1,7 +1,7 @@
 import { ISessionSummary } from '@/core/domain/sessions/session.entity';
 import { SessionCard } from './session-card';
 
-interface SessionListProps {
+export interface SessionListProps {
   sessions: ISessionSummary[];
 }
 export const SessionList = ({ sessions }: SessionListProps) => {

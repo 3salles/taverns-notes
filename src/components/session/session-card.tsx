@@ -1,7 +1,7 @@
 import { ISessionSummary } from '@/core/domain/sessions/session.entity';
 import Link from 'next/link';
 
-interface SessionCardProps {
+export interface SessionCardProps {
   session: ISessionSummary;
 }
 
