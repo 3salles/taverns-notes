@@ -1,6 +1,6 @@
 import test, { expect } from '@playwright/test';
 
-test('Success session creation by UI', async ({ page }) => {
+test('Session creation by UI (success)', async ({ page }) => {
   const uniqueTitle = `E2E Session ${Date.now()}`;
   const note = 'Conteúdo gerado via E2E';
 

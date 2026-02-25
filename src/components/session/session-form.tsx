@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation';
 import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { createSessionAction } from '@/app/actions/session.actions';
+import {
+  createSessionAction,
+  updateSessionAction,
+} from '@/app/actions/session.actions';
 import {
   CreateSessionDTO,
-  CreateSessionSchema,
+  createSessionSchema,
 } from '@/core/application/session/create-session.dto';
+import { ISession } from '@/core/domain/sessions/session.entity';
 import { CopyButton } from '../button-actions';
 import { Button } from '../ui/button';
 import {
@@ -22,20 +26,28 @@ import {
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 
-export const SessionForm = () => {
+export interface SessionFormProps {
+  session?: ISession | null;
+}
+
+export const SessionForm = ({ session }: SessionFormProps) => {
   const router = useRouter();
 
   const sessionForm = useForm<CreateSessionDTO>({
-    resolver: zodResolver(CreateSessionSchema),
+    resolver: zodResolver(createSessionSchema),
     defaultValues: {
-      title: '',
-      note: '',
+      title: session?.title || '',
+      note: session?.note || '',
     },
   });
   const content = useWatch({ control: sessionForm.control, name: 'note' });
 
+  const isEdit = !!session?.id;
+
   const submitSessionForm = async (data: CreateSessionDTO) => {
-    const result = await createSessionAction(data);
+    const result = isEdit
+      ? await updateSessionAction({ id: session.id, ...data })
+      : await createSessionAction(data);
 
     if (!result.success) {
       toast.error(result.message);

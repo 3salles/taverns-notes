@@ -8,6 +8,9 @@ const config = createJestConfig({
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@prisma/client|@prisma/adapter-pg)/)',
+  ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '/.next/',

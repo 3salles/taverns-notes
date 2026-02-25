@@ -6,6 +6,24 @@ import { PrismaClient } from '@/generated/prisma/client';
 export class PrismaSessionRepository implements SessionRepository {
   constructor(private prisma: PrismaClient) {}
 
+  async create(data: CreateSessionDTO): Promise<void> {
+    await this.prisma.session.create({
+      data,
+    });
+  }
+
+  async update(id: string, data: Partial<CreateSessionDTO>): Promise<ISession> {
+    const updated = await this.prisma.session.update({
+      where: { id },
+      data: {
+        ...(data.title !== undefined ? { title: data.title } : {}),
+        ...(data.note !== undefined ? { note: data.note } : {}),
+      },
+    });
+
+    return updated;
+  }
+
   async findMany(): Promise<ISession[]> {
     const sessions = await this.prisma.session.findMany({
       orderBy: { createdAt: 'desc' },
@@ -32,9 +50,11 @@ export class PrismaSessionRepository implements SessionRepository {
     return sessions;
   }
 
-  async create(data: CreateSessionDTO): Promise<void> {
-    await this.prisma.session.create({
-      data,
+  async findById(id: string): Promise<ISession | null> {
+    const session = await this.prisma.session.findUnique({
+      where: { id },
     });
+
+    return session;
   }
 }
