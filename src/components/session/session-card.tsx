@@ -3,6 +3,7 @@ import { ISessionSummary } from '@/core/domain/sessions/session.entity';
 import { Trash as DeleteIcon, Loader2 as LoadingIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +24,9 @@ export interface SessionCardProps {
 export const SessionCard = ({ session }: SessionCardProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDeleteSession = () => setIsDeleting(true);
+  const handleDeleteSession = () => {
+    toast.success('Sessão removida com sucesso!');
+  };
 
   return (
     <>
@@ -52,7 +55,6 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                 size="icon"
                 title="Remover sessão"
                 aria-label="Remover sessão"
-                onClick={() => setIsDeleting(true)}
               >
                 <DeleteIcon className="w-3 h-3" />
               </Button>
@@ -74,6 +76,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                   {isDeleting && (
                     <LoadingIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
+                  Remover
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

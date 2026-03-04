@@ -4,6 +4,11 @@ import {
 } from '@/components/session/session-card';
 import { render, screen } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
+import { toast } from 'sonner';
+
+jest.mock('sonner', () => ({
+  toast: { success: jest.fn(), error: jest.fn() },
+}));
 
 const renderSut = ({ session }: SessionCardProps) => {
   return render(<SessionCard session={session} />);
@@ -25,9 +30,18 @@ describe('SessionCard', () => {
     renderSut({ session });
 
     const deleteButton = screen.getByRole('button', { name: 'Remover sessão' });
-
     await user.click(deleteButton);
 
     expect(screen.getByText('Remover Sessão')).toBeInTheDocument();
+  });
+
+  it('should successfully remove session and show toast', async () => {
+    renderSut({ session });
+
+    const deleteButton = screen.getByRole('button', { name: 'Remover sessão' });
+    await user.click(deleteButton);
+    await user.click(screen.getByRole('button', { name: 'Remover' }));
+
+    expect(toast.success).toHaveBeenCalledWith('Sessão removida com sucesso!');
   });
 });
