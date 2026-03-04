@@ -1,11 +1,13 @@
 import {
   createSessionAction,
   searchSessionAction,
+  updateSessionAction,
 } from '@/app/actions/session.actions';
 
 jest.mock('@/lib/prisma', () => ({ prisma: {} }));
 const mockedSearchExecute = jest.fn();
 const mockedCreateExecute = jest.fn();
+const mockedUpdateExecute = jest.fn();
 
 jest.mock('@/core/application/session/search-session.use-case', () => ({
   SearchSessionUseCase: jest
@@ -19,9 +21,17 @@ jest.mock('@/core/application/session/create-session.use-case', () => ({
     .mockImplementation(() => ({ execute: mockedCreateExecute })),
 }));
 
+jest.mock('@/core/application/session/update-session.use-case', () => ({
+  UpdateSessionUseCase: jest
+    .fn()
+    .mockImplementation(() => ({ execute: mockedUpdateExecute })),
+}));
+
 describe('Server Actions: Sessions', () => {
   beforeEach(() => {
     mockedSearchExecute.mockReset();
+    mockedCreateExecute.mockReset();
+    mockedUpdateExecute.mockReset();
   });
 
   describe('searchSessionAction', () => {
@@ -134,6 +144,57 @@ describe('Server Actions: Sessions', () => {
 
       expect(result?.success).toBe(false);
       expect(result?.message).toBe('Falha ao criar sessão');
+    });
+  });
+
+  describe('updateSessionAction', () => {
+    const sessionId = '1';
+    const data = {
+      id: sessionId,
+      title: 'new title',
+      note: 'new note',
+    };
+
+    it('should throw validation error when there is empty fields', async () => {
+      const data = {
+        id: '1',
+        title: '',
+        note: '',
+      };
+
+      const result = await updateSessionAction(data);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Erro de validação');
+      expect(result.errors).toBeDefined();
+    });
+
+    it('should throw error when session does not exist', async () => {
+      mockedUpdateExecute.mockRejectedValue(new Error('ERROR_NOT_FOUND'));
+
+      const result = await updateSessionAction(data);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Sessão não encontrada');
+    });
+
+    it('should update successfully', async () => {
+      mockedUpdateExecute.mockResolvedValue({});
+
+      const result = await updateSessionAction(data);
+
+      expect(result).toMatchObject({
+        success: true,
+        message: 'Sessão atualizada com sucesso!',
+      });
+    });
+
+    it('should throw generic error when session update fails', async () => {
+      mockedUpdateExecute.mockRejectedValue(new Error('UNKNOWN'));
+      const result = await updateSessionAction(data);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Falha ao atualizar sessão');
     });
   });
 });
