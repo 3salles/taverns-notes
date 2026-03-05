@@ -1,5 +1,6 @@
 import {
   createSessionAction,
+  deleteSessionAction,
   searchSessionAction,
   updateSessionAction,
 } from '@/app/actions/session.actions';
@@ -8,6 +9,7 @@ jest.mock('@/lib/prisma', () => ({ prisma: {} }));
 const mockedSearchExecute = jest.fn();
 const mockedCreateExecute = jest.fn();
 const mockedUpdateExecute = jest.fn();
+const mockedDeleteExecute = jest.fn();
 
 jest.mock('@/core/application/session/search-session.use-case', () => ({
   SearchSessionUseCase: jest
@@ -27,11 +29,18 @@ jest.mock('@/core/application/session/update-session.use-case', () => ({
     .mockImplementation(() => ({ execute: mockedUpdateExecute })),
 }));
 
+jest.mock('@/core/application/session/delete-session.use-case', () => ({
+  DeleteSessionUseCase: jest
+    .fn()
+    .mockImplementation(() => ({ execute: mockedDeleteExecute })),
+}));
+
 describe('Server Actions: Sessions', () => {
   beforeEach(() => {
     mockedSearchExecute.mockReset();
     mockedCreateExecute.mockReset();
     mockedUpdateExecute.mockReset();
+    mockedDeleteExecute.mockReset();
   });
 
   describe('searchSessionAction', () => {
@@ -195,6 +204,47 @@ describe('Server Actions: Sessions', () => {
 
       expect(result.success).toBe(false);
       expect(result.message).toBe('Falha ao atualizar sessão');
+    });
+  });
+
+  describe('deleteSessionAction', () => {
+    it('should successfully delete session', async () => {
+      mockedDeleteExecute.mockResolvedValue(undefined);
+      const sessionId = '1';
+
+      const result = await deleteSessionAction(sessionId);
+
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Sessão removida com sucesso!');
+    });
+
+    it('should throws error when id is empty', async () => {
+      const sessionId = '';
+
+      const result = await deleteSessionAction(sessionId);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('ID da sessão é obrigatório');
+    });
+
+    it('should throws error when session does not exist', async () => {
+      mockedDeleteExecute.mockRejectedValue(new Error('SESSION_NOT_FOUND'));
+      const sessionID = '1';
+
+      const result = await deleteSessionAction(sessionID);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Sessão não encontrada');
+    });
+
+    it('should throws generic error when action fails ', async () => {
+      mockedDeleteExecute.mockRejectedValue(new Error('UNKNOWN'));
+      const sessionId = '1';
+
+      const result = await deleteSessionAction(sessionId);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Falha ao remover sessão');
     });
   });
 });
