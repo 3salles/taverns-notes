@@ -1,10 +1,14 @@
 'use client';
-import { deleteSessionAction } from '@/app/actions/session.actions';
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+
 import { Trash as DeleteIcon, Loader2 as LoadingIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';
+
+import { deleteSessionAction } from '@/app/actions/session.actions';
+import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { useRouter } from 'next/navigation';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,70 +27,81 @@ export interface SessionCardProps {
 }
 
 export const SessionCard = ({ session }: SessionCardProps) => {
+  const router = useRouter();
+
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDeleteSession = async () => {
     setIsDeleting(true);
+
     const result = await deleteSessionAction(session.id);
     toast[result.success ? 'success' : 'error'](result.message);
+
     setIsDeleting(false);
+    router.refresh();
   };
 
   return (
-    <>
-      <li
-        className="p-3 rounded-lg transition-all duration-200 group relative
-     hover:bg-gray-700"
-      >
-        <header className="flex items-start justify-between">
-          <Link href={`/${session.id}`} prefetch className="flex-1 min-w-0">
-            <h3
-              className="font-medium text-sm text-white 
+    <motion.li
+      className="p-3 rounded-lg transition-all duration-200 group relative
+      hover:bg-gray-700"
+      aria-label={session.title}
+      initial={{ opacity: 1, height: 'auto' }}
+      exit={{
+        opacity: 0,
+        height: 0,
+        marginBottom: 0,
+        transition: { duration: 0.3, ease: 'easeInOut' },
+      }}
+    >
+      <header className="flex items-start justify-between">
+        <Link href={`/${session.id}`} prefetch className="flex-1 min-w-0">
+          <h3
+            className="font-medium text-sm text-white 
         group-hover:text-accent-300 transition-colors"
+          >
+            {session.title}
+          </h3>
+
+          <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+            {session.note}
+          </p>
+        </Link>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="icon"
+              size="icon"
+              title="Remover Sessão"
+              aria-label="Remover Sessão"
             >
-              {session.title}
-            </h3>
-
-            <p className="text-xs text-gray-400 mt-1 line-clamp-2">
-              {session.note}
-            </p>
-          </Link>
-
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="icon"
-                size="icon"
-                title="Remover Sessão"
-                aria-label="Remover Sessão"
+              <DeleteIcon className="w-3 h-3" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remover Sessão</AlertDialogTitle>
+              <AlertDialogDescription>
+                Tem certeza que deseja remover esta sessão? Esta ação não pode
+                ser desfeita.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteSession}
+                disabled={isDeleting}
               >
-                <DeleteIcon className="w-3 h-3" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Remover Sessão</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Tem certeza que deseja remover esta sessão? Esta ação não pode
-                  ser desfeita.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleDeleteSession}
-                  disabled={isDeleting}
-                >
-                  {isDeleting && (
-                    <LoadingIcon className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Remover
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </header>
-      </li>
-    </>
+                {isDeleting && (
+                  <LoadingIcon className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Remover
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </header>
+    </motion.li>
   );
 };

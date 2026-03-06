@@ -1,8 +1,10 @@
 'use client';
 
 import { Check, Copy } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+
 import { Button } from '../ui/button';
 
 export interface CopyButtonProps {
@@ -49,21 +51,24 @@ export const CopyButton = ({ content }: CopyButtonProps) => {
       type="button"
       variant="outline"
       size="sm"
-      className="disable:opacity-50"
+      className="disabled:opacity-50"
       disabled={isContentEmpty}
       onClick={handleCopy}
     >
       {isCopied ? (
-        <>
-          <Check className="w-4 h-4 text-green-400" />
-          <span>Copiado</span>
-        </>
+        <Check className="w-4 h-4 text-green-400" />
       ) : (
-        <>
-          <Copy className="w-4 h-4" />
-          <span>Copiar</span>
-        </>
+        <Copy className="w-4 h-" />
       )}
+      <motion.span
+        key={isCopied ? 'copiado' : 'copiar'}
+        initial={{ opacity: 0, y: 2 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -2 }}
+        transition={{ duration: 0.2 }}
+      >
+        {isCopied ? 'Copiado' : 'Copiar'}
+      </motion.span>
     </Button>
   );
 };
