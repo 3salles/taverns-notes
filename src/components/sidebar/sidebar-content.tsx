@@ -86,7 +86,11 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
         <Menu className="w-5 h-5 text-gray-100" />
       </Button>
       <motion.aside
-        className={`border-r border-gray-700 flex flex-col h-full bg-gray-800 transition-[transform,width] duration-300 ease-in-out fixed md:relative left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] ${isCollapsed ? 'md:w-[72px]' : 'md:w-[384px]'} ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+        className={`border-r border-gray-700 flex flex-col h-full bg-gray-800 
+          transition-[transform,width] duration-300 ease-in-out fixed md:relative 
+          left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] 
+          ${isCollapsed ? 'md:w-18' : 'md:w-[384px]'} 
+          ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
         initial={false}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
@@ -203,7 +207,7 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
               exit={{ opacity: 0 }}
               transition={fadeTransition}
             >
-              <SessionList sessions={sessions} />
+              <SessionList sessions={sessionList} />
             </motion.nav>
           </>
         )}

@@ -20,6 +20,12 @@ const renderSut = ({ session }: SessionCardProps) => {
 };
 
 describe('SessionCard', () => {
+  beforeEach(() => {
+    deleteMock.mockReset();
+    (toast.success as jest.Mock).mockReset();
+    (toast.error as jest.Mock).mockReset();
+  });
+
   const user = userEvent.setup();
   const session = { id: '1', title: 'title 01', note: 'content 01' };
 
