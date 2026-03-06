@@ -4,8 +4,14 @@ import {
   searchSessionAction,
   updateSessionAction,
 } from '@/app/actions/session.actions';
+import { revalidatePath } from 'next/cache';
 
 jest.mock('@/lib/prisma', () => ({ prisma: {} }));
+
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 const mockedSearchExecute = jest.fn();
 const mockedCreateExecute = jest.fn();
 const mockedUpdateExecute = jest.fn();
@@ -41,6 +47,7 @@ describe('Server Actions: Sessions', () => {
     mockedCreateExecute.mockReset();
     mockedUpdateExecute.mockReset();
     mockedDeleteExecute.mockReset();
+    (revalidatePath as jest.Mock).mockReset();
   });
 
   describe('searchSessionAction', () => {
@@ -140,6 +147,7 @@ describe('Server Actions: Sessions', () => {
 
       expect(result?.success).toBe(true);
       expect(result?.message).toBe('Sessão criada com sucesso!');
+      expect(revalidatePath).toHaveBeenCalledTimes(1);
     });
 
     it('should return error when creation fails', async () => {
@@ -196,6 +204,7 @@ describe('Server Actions: Sessions', () => {
         success: true,
         message: 'Sessão atualizada com sucesso!',
       });
+      expect(revalidatePath).toHaveBeenCalledTimes(1);
     });
 
     it('should throw generic error when session update fails', async () => {
@@ -216,6 +225,7 @@ describe('Server Actions: Sessions', () => {
 
       expect(result.success).toBe(true);
       expect(result.message).toBe('Sessão removida com sucesso!');
+      expect(revalidatePath).toHaveBeenCalledTimes(1);
     });
 
     it('should throws error when id is empty', async () => {
