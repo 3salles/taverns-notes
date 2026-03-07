@@ -1,4 +1,4 @@
-export interface ISession {
+export interface Session {
   title: string;
   id: string;
   note: string;
@@ -7,4 +7,8 @@ export interface ISession {
   updatedAt: Date;
 }
 
-export type ISessionSummary = Pick<ISession, 'id' | 'title' | 'note'>;
+export interface SessionSummary {
+  id: string;
+  title: string;
+  note: string;
+}

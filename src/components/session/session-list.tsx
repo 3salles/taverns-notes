@@ -1,9 +1,9 @@
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { SessionSummary } from '@/core/domain/sessions/session.entity';
 import { motion } from 'motion/react';
 import { SessionCard } from './session-card';
 
 export interface SessionListProps {
-  sessions: ISessionSummary[];
+  sessions: SessionSummary[];
 }
 //TODO - Adicionar atualização de lista ao remover
 export const SessionList = ({ sessions }: SessionListProps) => {

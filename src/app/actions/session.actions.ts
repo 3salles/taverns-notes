@@ -1,8 +1,12 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import z from 'zod';
+import { z } from 'zod';
 
+import {
+  CreateSessionDTO,
+  createSessionSchema,
+} from '@/core/application/session/create-session.dto';
 import { CreateSessionUseCase } from '@/core/application/session/create-session.use-case';
 import { DeleteSessionUseCase } from '@/core/application/session/delete-session.use-case';
 import { SearchSessionUseCase } from '@/core/application/session/search-session.use-case';
@@ -11,28 +15,24 @@ import {
   updateSessionSchema,
 } from '@/core/application/session/update-session.dto';
 import { UpdateSessionUseCase } from '@/core/application/session/update-session.use-case';
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { SessionSummary } from '@/core/domain/sessions/session.entity';
 import { PrismaSessionRepository } from '@/infra/repository/prisma-session.repository';
 import { revalidatePath } from 'next/cache';
-import {
-  CreateSessionDTO,
-  createSessionSchema,
-} from './../../core/application/session/create-session.dto';
 
-interface SearchFromState {
+interface SearchFormState {
   success: boolean;
-  sessions?: ISessionSummary[];
+  sessions?: SessionSummary[];
   message?: string;
 }
 
-interface FormState extends SearchFromState {
-  errors?: unknown;
+interface FormState extends SearchFormState {
+  errors?: Record<string, string[] | undefined>;
 }
 
 export async function searchSessionAction(
-  _prev: SearchFromState,
+  _prev: SearchFormState,
   formData: FormData
-): Promise<SearchFromState> {
+): Promise<SearchFormState> {
   const term = String(formData.get('q') ?? '').trim();
 
   const sessionRepository = new PrismaSessionRepository(prisma);
@@ -57,8 +57,6 @@ export async function searchSessionAction(
       message: 'Falha ao buscar sessões',
     };
   }
-}
-{
 }
 
 export async function createSessionAction(
@@ -116,9 +114,7 @@ export async function updateSessionAction(
       message: 'Sessão atualizada com sucesso!',
     };
   } catch (error) {
-    const _error = error as Error;
-
-    if (_error.message === 'SESSION_NOT_FOUND') {
+    if (error instanceof Error && error.message === 'SESSION_NOT_FOUND') {
       return {
         success: false,
         message: 'Sessão não encontrada',
@@ -142,8 +138,7 @@ export async function deleteSessionAction(id: string): Promise<FormState> {
 
     return { success: true, message: 'Sessão removida com sucesso!' };
   } catch (error) {
-    const _error = error as Error;
-    if (_error.message === 'SESSION_NOT_FOUND') {
+    if (error instanceof Error && error.message === 'SESSION_NOT_FOUND') {
       return {
         success: false,
         message: 'Sessão não encontrada',

@@ -4,13 +4,12 @@ import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 
 const inputVariants = cva(
-  'h-11 w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white placeholder-gray-400 focus:outline-none',
+  'w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white placeholder-gray-400 focus:outline-none',
   {
     variants: {
       variant: {
-        default:
-          'h-11 w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white placeholder-gray-400 focus:outline-none',
-        transparent: 'bg-transparent text-white placeholder:text-[#424242]',
+        default: 'h-11',
+        transparent: 'bg-transparent placeholder:text-[#424242]',
       },
       size: {
         default: 'h-9',

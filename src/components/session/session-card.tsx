@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { deleteSessionAction } from '@/app/actions/session.actions';
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { SessionSummary } from '@/core/domain/sessions/session.entity';
 import { useRouter } from 'next/navigation';
 import {
   AlertDialog,
@@ -23,7 +23,7 @@ import {
 import { Button } from '../ui/button';
 
 export interface SessionCardProps {
-  session: ISessionSummary;
+  session: SessionSummary;
 }
 
 export const SessionCard = ({ session }: SessionCardProps) => {

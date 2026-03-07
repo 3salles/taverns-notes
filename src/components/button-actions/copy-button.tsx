@@ -35,8 +35,9 @@ export const CopyButton = ({ content }: CopyButtonProps) => {
 
       timerRef.current = setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
-      const _error = error as Error;
-      toast.error(`Erro ao copiar mensagem: ${_error.message}`);
+      const message =
+        error instanceof Error ? error.message : 'Erro desconhecido';
+      toast.error(`Erro ao copiar mensagem: ${message}`);
     }
   };
 
@@ -58,7 +59,7 @@ export const CopyButton = ({ content }: CopyButtonProps) => {
       {isCopied ? (
         <Check className="w-4 h-4 text-green-400" />
       ) : (
-        <Copy className="w-4 h-" />
+        <Copy className="w-4 h-4" />
       )}
       <motion.span
         key={isCopied ? 'copiado' : 'copiar'}

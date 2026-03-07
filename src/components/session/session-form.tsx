@@ -13,7 +13,7 @@ import {
   CreateSessionDTO,
   createSessionSchema,
 } from '@/core/application/session/create-session.dto';
-import { ISession } from '@/core/domain/sessions/session.entity';
+import { Session } from '@/core/domain/sessions/session.entity';
 import { CopyButton } from '../button-actions';
 import { Button } from '../ui/button';
 import {
@@ -27,7 +27,7 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 
 export interface SessionFormProps {
-  session?: ISession | null;
+  session?: Session | null;
 }
 
 export const SessionForm = ({ session }: SessionFormProps) => {
@@ -36,8 +36,8 @@ export const SessionForm = ({ session }: SessionFormProps) => {
   const sessionForm = useForm<CreateSessionDTO>({
     resolver: zodResolver(createSessionSchema),
     defaultValues: {
-      title: session?.title || '',
-      note: session?.note || '',
+      title: session?.title ?? '',
+      note: session?.note ?? '',
     },
   });
   const content = useWatch({ control: sessionForm.control, name: 'note' });

@@ -1,9 +1,9 @@
 import { CreateSessionUseCase } from '@/core/application/session/create-session.use-case';
-import { ISession } from '@/core/domain/sessions/session.entity';
+import { Session } from '@/core/domain/sessions/session.entity';
 import { SessionRepository } from '@/core/domain/sessions/session.repository';
 
 describe('CreateSessionUseCase', () => {
-  const input: ISession = {
+  const input: Session = {
     id: '1',
     title: 'Title 01',
     note: 'Content 01',

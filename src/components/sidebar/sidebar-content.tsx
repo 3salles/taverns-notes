@@ -19,7 +19,7 @@ import {
 } from 'react';
 
 import { searchSessionAction } from '@/app/actions/session.actions';
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { SessionSummary } from '@/core/domain/sessions/session.entity';
 import { Logo } from '../logo';
 import { SessionList } from '../session';
 import { Button } from '../ui/button';
@@ -27,7 +27,7 @@ import { Input } from '../ui/input';
 import { Spinner } from '../ui/spinner';
 
 export type SidebarContentProps = {
-  sessions: ISessionSummary[];
+  sessions: SessionSummary[];
 };
 
 const fadeTransition = { duration: 0.2, delay: 0.1 };
@@ -50,8 +50,7 @@ export const SidebarContent = ({ sessions }: SidebarContentProps) => {
   const [query, setQuery] = useQueryState('q', { defaultValue: '' });
 
   const hasQuery = query.trim().length > 0;
-  const activeSession = hasQuery ? searchState.sessions : undefined;
-  const sessionList = activeSession ?? sessions;
+  const sessionList = hasQuery ? (searchState.sessions ?? sessions) : sessions;
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
   const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);

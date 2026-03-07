@@ -1,4 +1,4 @@
-import { ISessionSummary } from '@/core/domain/sessions/session.entity';
+import { SessionSummary } from '@/core/domain/sessions/session.entity';
 import { PrismaSessionRepository } from '@/infra/repository/prisma-session.repository';
 import { prisma } from '@/lib/prisma';
 import { Suspense } from 'react';
@@ -7,13 +7,10 @@ import { SidebarContent } from './sidebar-content';
 
 export const Sidebar = async () => {
   const sessionRepository = new PrismaSessionRepository(prisma);
-  let initialSessions: ISessionSummary[] = [];
+  let initialSessions: SessionSummary[] = [];
 
   try {
-    const sessions = await sessionRepository.findMany();
-    initialSessions = sessions.map((session) => ({
-      ...session,
-    }));
+    initialSessions = await sessionRepository.findMany();
   } catch {
     initialSessions = [];
   }

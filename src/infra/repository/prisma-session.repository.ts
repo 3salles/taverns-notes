@@ -1,5 +1,5 @@
 import { CreateSessionDTO } from '@/core/application/session/create-session.dto';
-import { ISession } from '@/core/domain/sessions/session.entity';
+import { Session } from '@/core/domain/sessions/session.entity';
 import { SessionRepository } from '@/core/domain/sessions/session.repository';
 import { PrismaClient } from '@/generated/prisma/client';
 
@@ -12,7 +12,7 @@ export class PrismaSessionRepository implements SessionRepository {
     });
   }
 
-  async update(id: string, data: Partial<CreateSessionDTO>): Promise<ISession> {
+  async update(id: string, data: Partial<CreateSessionDTO>): Promise<Session> {
     const updated = await this.prisma.session.update({
       where: { id },
       data: {
@@ -30,7 +30,7 @@ export class PrismaSessionRepository implements SessionRepository {
     });
   }
 
-  async findMany(): Promise<ISession[]> {
+  async findMany(): Promise<Session[]> {
     const sessions = await this.prisma.session.findMany({
       orderBy: { createdAt: 'desc' },
     });
@@ -38,7 +38,7 @@ export class PrismaSessionRepository implements SessionRepository {
     return sessions;
   }
 
-  async searchMany(term?: string): Promise<ISession[]> {
+  async searchMany(term?: string): Promise<Session[]> {
     const q = term?.trim() ?? '';
 
     const sessions = await this.prisma.session.findMany({
@@ -56,7 +56,7 @@ export class PrismaSessionRepository implements SessionRepository {
     return sessions;
   }
 
-  async findById(id: string): Promise<ISession | null> {
+  async findById(id: string): Promise<Session | null> {
     const session = await this.prisma.session.findUnique({
       where: { id },
     });

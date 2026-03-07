@@ -1,4 +1,4 @@
-import { ISession } from '@/core/domain/sessions/session.entity';
+import { Session } from '@/core/domain/sessions/session.entity';
 import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaSessionRepository } from '@/infra/repository/prisma-session.repository';
 import { CreateSessionDTO } from './../../../core/application/session/create-session.dto';
@@ -12,7 +12,7 @@ interface SessionDelegateMock {
     (args: {
       where: { id: string };
       data: UpdateSessionDTO;
-    }) => Promise<ISession>
+    }) => Promise<Session>
   >;
   delete: (args: { where: { id: string } }) => Promise<void>;
   findMany: jest.MockedFunction<
@@ -24,10 +24,10 @@ interface SessionDelegateMock {
           note?: { contains: string; mode: 'insensitive' };
         }>;
       };
-    }) => Promise<ISession[]>
+    }) => Promise<Session[]>
   >;
   findUnique: jest.MockedFunction<
-    (args: { where: { id: string } }) => Promise<ISession | null>
+    (args: { where: { id: string } }) => Promise<Session | null>
   >;
 }
 
