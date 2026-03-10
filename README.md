@@ -13,10 +13,6 @@
 </p>
 
 <p align="center">
-  <img src="docs/images/preview.png" width="900">
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/github/repo-size/3salles/taverns-notes?style=for-the-badge">
   <img src="https://img.shields.io/github/languages/count/3salles/taverns-notes?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/3salles/taverns-notes?style=for-the-badge">
