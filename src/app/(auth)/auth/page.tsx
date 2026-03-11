@@ -253,8 +253,8 @@ export default function Auth() {
 
           <button
             className="flex w-full items-center justify-center gap-2 rounded-sm
-            border border-border-strong h-11 text-base text-text-dim
-            transition-colors hover:border-text-dim hover:text-text"
+              border border-border-strong h-11 text-base text-text-dim
+              transition-colors hover:border-text-dim hover:text-text cursor-pointer"
           >
             <GoogleIcon />
             Continuar com Google
