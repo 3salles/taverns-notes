@@ -46,67 +46,138 @@ export default function Auth() {
             <p className="mb-8 text-[0.88rem] text-text-dim">
               Entre para continuar sua campanha
             </p>
-
-            <Tabs defaultValue="login">
-              <TabsList variant="line" className="mb-7">
-                <TabsTrigger value="login">Entrar</TabsTrigger>
-                <TabsTrigger value="signup">Criar conta</TabsTrigger>
-              </TabsList>
-              <TabsContent value="login">
-                <Form {...loginForm}>
-                  <form className="space-y-4">
-                    <FormField
-                      control={loginForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="mestre@taverna.com"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={loginForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Senha</FormLabel>
-
-                          <Link
-                            href="/forgot-password"
-                            className="text-right text-xs text-text-muted hover:text-ember-lite transition-colors"
-                          >
-                            Esqueceu a senha?
-                          </Link>
-
-                          <FormControl>
-                            <Input
-                              type="password"
-                              placeholder="••••••••"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-ember hover:bg-ember-lite"
-                    >
-                      Entrar na campanha
-                    </Button>
-                  </form>
-                </Form>
-              </TabsContent>
-              <TabsContent value="signup">signup form</TabsContent>
-            </Tabs>
           </header>
+
+          <Tabs defaultValue="login">
+            <TabsList variant="line" className="mb-7">
+              <TabsTrigger value="login">Entrar</TabsTrigger>
+              <TabsTrigger value="signup">Criar conta</TabsTrigger>
+            </TabsList>
+            <TabsContent value="login">
+              <Form {...loginForm}>
+                <form className="space-y-4">
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="mestre@taverna.com" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Senha</FormLabel>
+
+                        <Link
+                          href="/forgot-password"
+                          className="text-right text-xs text-text-muted hover:text-ember-lite transition-colors"
+                        >
+                          Esqueceu a senha?
+                        </Link>
+
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-ember hover:bg-ember-lite"
+                  >
+                    Entrar na campanha
+                  </Button>
+                </form>
+              </Form>
+            </TabsContent>
+            <TabsContent value="signup">
+              <Form {...loginForm}>
+                <form className="space-y-4">
+                  <FormField
+                    control={loginForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Seu nome</FormLabel>
+
+                        <FormControl>
+                          <Input placeholder="Como te chamamos?" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+
+                        <FormControl>
+                          <Input placeholder="mestre@taverna.com" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Senha</FormLabel>
+
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-ember hover:bg-ember-lite"
+                  >
+                    Criar conta
+                  </Button>
+                </form>
+              </Form>
+            </TabsContent>
+          </Tabs>
+
+          <div
+            className="my-5 flex items-center gap-3 text-[0.76rem] 
+          tracking-[0.08em] text-text-muted"
+          >
+            <div className="h-px flex-1 bg-border" />
+            ou
+            <div className="h-px flex-1 bg-border" />
+          </div>
+
+          <button
+            className="flex w-full items-center justify-center gap-2 rounded-sm
+        border border-border-strong py-2.5 text-[0.85rem] text-text-dim
+        transition-colors hover:border-text-dim hover:text-text"
+          >
+            Continuar com Google
+          </button>
         </div>
       </div>
     </section>
