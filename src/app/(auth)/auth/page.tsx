@@ -28,6 +28,16 @@ export default function Auth() {
   return (
     <section className="flex h-screen w-full bg-ink text-text font-body overflow-hidden">
       <div className="relative flex basis-[55%] items-center justify-center overflow-hidden">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `
+        radial-gradient(ellipse 60% 70% at 35% 55%, rgba(201,76,26,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 75% 20%, rgba(184,146,42,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 15% 85%, rgba(100,50,10,0.15) 0%, transparent 55%)
+      `,
+          }}
+        />
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-12">
           {/* brand */}
           <motion.div

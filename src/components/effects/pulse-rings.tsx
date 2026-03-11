@@ -20,10 +20,9 @@ export function PulseRings() {
               height: size,
               border: `1px solid ${color}`,
             }}
-            initial={{ scale: 0.8, opacity: 0.4 }}
             animate={{
-              scale: [0.85, 1.1, 0.85],
-              opacity: [0.35, 0.7, 0.35],
+              scale: [1, 1.025, 1],
+              opacity: [0.3, 0.8, 0.3],
             }}
             transition={{
               duration: 4,
