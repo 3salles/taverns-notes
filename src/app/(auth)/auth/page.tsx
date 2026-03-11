@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
 export default function Auth() {
@@ -76,6 +77,13 @@ export default function Auth() {
                         <FormItem>
                           <FormLabel>Senha</FormLabel>
 
+                          <Link
+                            href="/forgot-password"
+                            className="text-right text-xs text-text-muted hover:text-ember-lite transition-colors"
+                          >
+                            Esqueceu a senha?
+                          </Link>
+
                           <FormControl>
                             <Input
                               type="password"
@@ -86,13 +94,6 @@ export default function Auth() {
                         </FormItem>
                       )}
                     />
-
-                    <button
-                      type="button"
-                      className="text-right text-xs text-text-muted hover:text-ember-lite"
-                    >
-                      Esqueceu a senha?
-                    </button>
 
                     <Button
                       type="submit"

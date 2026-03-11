@@ -4,23 +4,47 @@ import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 
 const inputVariants = cva(
-  'w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white placeholder-gray-400 focus:outline-none',
+  [
+    'w-full',
+    'bg-ink',
+    'border border-border-strong',
+    'rounded-sm',
+    'px-3 py-2',
+    'text-text',
+    'placeholder:text-text-muted',
+    'font-body',
+    'text-sm',
+    'transition-colors',
+    'outline-none',
+    'focus:border-ember',
+    'focus:ring-4',
+    'focus:ring-ember/10',
+    'disabled:opacity-50',
+    'disabled:cursor-not-allowed',
+  ],
   {
     variants: {
       variant: {
-        default: 'h-11',
-        transparent: 'bg-transparent placeholder:text-[#424242]',
+        default: '',
+        transparent: [
+          'bg-transparent',
+          'border-border',
+          'placeholder:text-text-muted',
+        ],
       },
+
       size: {
-        default: 'h-9',
-        sm: 'h-8',
-        lg: 'h-14 text-2xl font-bold sm:h-16 sm:text-3xl',
+        sm: 'h-8 text-sm',
+        default: 'h-9 text-sm',
+        lg: 'h-11 text-base',
       },
+
       readOnly: {
-        true: 'focus:ring-0 focus:border-gray-600 cursor-default',
-        false: 'focus:ring-2 focus:ring-accent-400 focus:border-transparent',
+        true: ['cursor-default', 'focus:border-border-strong', 'focus:ring-0'],
+        false: '',
       },
     },
+
     defaultVariants: {
       variant: 'default',
       size: 'default',
@@ -44,8 +68,8 @@ function Input({
     <input
       type={type}
       data-slot="input"
-      className={cn(inputVariants({ variant, size, readOnly, className }))}
       readOnly={readOnly}
+      className={cn(inputVariants({ variant, size, readOnly }), className)}
       {...props}
     />
   );
