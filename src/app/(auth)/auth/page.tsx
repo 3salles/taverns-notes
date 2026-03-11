@@ -54,7 +54,7 @@ export default function Auth() {
           <TomeScene />
 
           {/* quote */}
-          <div className="absolute bottom-12 left-0 right-0 px-12 text-center animate-fade-up">
+          <div className="w-full max-w-90 px-8 py-6 animate-fade-up">
             <p className="mx-auto mb-1 max-w-85 font-display italic text-text-dim leading-relaxed">
               Every great campaign begins with a single note written in the
               dark.
@@ -67,7 +67,7 @@ export default function Auth() {
         </div>
       </div>
       <div className="basis-px bg-linear-to-b from-transparent via-border-strong to-transparent" />
-      <div className="relative flex flex-1 items-center justify-center bg-surface overflow-hidden">
+      <div className="relative flex w-[45%] items-center justify-center bg-surface overflow-hidden">
         <div
           className="pointer-events-none absolute right-0 top-0 h-50 w-50"
           style={{
@@ -76,23 +76,27 @@ export default function Auth() {
           }}
         />
 
-        <div className="w-full max-w-90 p-8 animate-fade-up">
+        <div className="w-full max-w-lg animate-fade-up px-8">
           <header>
-            <h1 className="font-display text-2xl font-bold leading-tight mb-1">
+            <h1 className="font-display text-3xl font-bold leading-tight mb-1">
               Bem-vindo de volta,
               <br />
               <em className="text-text-muted italic">Aventureiro!</em>
             </h1>
-            <p className="mb-8 text-[0.88rem] text-text-dim">
+            <p className="mb-8 text-base text-text-dim">
               Entre para continuar sua campanha
             </p>
           </header>
 
           <Tabs defaultValue="login">
-            <TabsList variant="line" className="mb-7">
+            <TabsList
+              variant="line"
+              className="mb-7 w-full border-b border-border"
+            >
               <TabsTrigger value="login">Entrar</TabsTrigger>
               <TabsTrigger value="signup">Criar conta</TabsTrigger>
             </TabsList>
+
             <TabsContent value="login">
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
@@ -110,6 +114,7 @@ export default function Auth() {
                           <FormLabel>Email</FormLabel>
                           <FormControl>
                             <Input
+                              size="lg"
                               placeholder="mestre@taverna.com"
                               {...field}
                             />
@@ -124,6 +129,7 @@ export default function Auth() {
                           <FormLabel>Senha</FormLabel>
                           <FormControl>
                             <Input
+                              size="lg"
                               type="password"
                               placeholder="••••••••"
                               {...field}
@@ -132,7 +138,8 @@ export default function Auth() {
                           <div className="flex justify-end">
                             <Link
                               href="/forgot-password"
-                              className="text-[0.76rem] text-text-muted hover:text-ember transition-colors"
+                              className="text-sm text-white hover:text-ember 
+                              transition-colors"
                             >
                               Esqueceu a senha?
                             </Link>
@@ -144,7 +151,9 @@ export default function Auth() {
                     <motion.div whileTap={{ scale: 0.97 }}>
                       <Button
                         type="submit"
-                        className="w-full bg-ember hover:bg-ember-lite"
+                        className="w-full bg-ember hover:bg-ember-lite text-base 
+                        h-12 mt-4"
+                        size="lg"
                       >
                         Entrar na campanha
                       </Button>
@@ -170,7 +179,11 @@ export default function Auth() {
                           <FormLabel>Seu nome</FormLabel>
 
                           <FormControl>
-                            <Input placeholder="Como te chamamos?" {...field} />
+                            <Input
+                              size="lg"
+                              placeholder="Como te chamamos?"
+                              {...field}
+                            />
                           </FormControl>
                         </FormItem>
                       )}
@@ -185,6 +198,7 @@ export default function Auth() {
 
                           <FormControl>
                             <Input
+                              size="lg"
                               placeholder="mestre@taverna.com"
                               {...field}
                             />
@@ -202,6 +216,7 @@ export default function Auth() {
 
                           <FormControl>
                             <Input
+                              size="lg"
                               type="password"
                               placeholder="••••••••"
                               {...field}
@@ -214,7 +229,9 @@ export default function Auth() {
                     <motion.div whileTap={{ scale: 0.97 }}>
                       <Button
                         type="submit"
-                        className="w-full bg-ember hover:bg-ember-lite"
+                        className="w-full bg-ember hover:bg-ember-lite text-base 
+                        h-12"
+                        size="lg"
                       >
                         Criar conta
                       </Button>
@@ -226,8 +243,8 @@ export default function Auth() {
           </Tabs>
 
           <div
-            className="my-5 flex items-center gap-3 text-[0.76rem] 
-          tracking-[0.08em] text-text-muted"
+            className="my-5 flex items-center gap-3 text-sm tracking-[0.08em] 
+          text-text-muted"
           >
             <div className="h-px flex-1 bg-border" />
             ou
@@ -236,8 +253,8 @@ export default function Auth() {
 
           <button
             className="flex w-full items-center justify-center gap-2 rounded-sm
-        border border-border-strong py-2.5 text-[0.85rem] text-text-dim
-        transition-colors hover:border-text-dim hover:text-text"
+            border border-border-strong h-11 text-base text-text-dim
+            transition-colors hover:border-text-dim hover:text-text"
           >
             <GoogleIcon />
             Continuar com Google
