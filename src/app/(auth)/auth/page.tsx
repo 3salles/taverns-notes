@@ -54,9 +54,8 @@ export default function Auth() {
             </span>
           </motion.div>
 
-          <TomeScene />
+          <TomeScene trigger={tab} />
 
-          {/* quote */}
           <div className="w-full max-w-90 px-8 py-6 animate-fade-up">
             <p className="mx-auto mb-1 max-w-85 font-display italic text-text-dim leading-relaxed">
               Every great campaign begins with a single note written in the
