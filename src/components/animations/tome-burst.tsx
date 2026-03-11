@@ -2,15 +2,13 @@
 
 import { motion } from 'motion/react';
 
-const RUNES = ['✧', 'ᚱ', 'ᚨ', '✦', 'ᛟ', 'ᛞ'];
-
 const PARTICLES = [
-  { id: 0, x: -40, delay: 0.0, rune: RUNES[0] },
-  { id: 1, x: -25, delay: 0.05, rune: RUNES[1] },
-  { id: 2, x: -10, delay: 0.1, rune: RUNES[2] },
-  { id: 3, x: 10, delay: 0.15, rune: RUNES[3] },
-  { id: 4, x: 25, delay: 0.2, rune: RUNES[4] },
-  { id: 5, x: 40, delay: 0.25, rune: RUNES[5] },
+  { id: 0, x: -40, delay: 0.0, rune: '✧', size: 18 },
+  { id: 1, x: -25, delay: 0.05, rune: 'ᚱ', size: 16 },
+  { id: 2, x: -10, delay: 0.1, rune: 'ᚨ', size: 22 },
+  { id: 3, x: 10, delay: 0.15, rune: '✦', size: 20 },
+  { id: 4, x: 25, delay: 0.2, rune: 'ᛟ', size: 17 },
+  { id: 5, x: 40, delay: 0.25, rune: 'ᛞ', size: 21 },
 ];
 
 export function TomeBurst({ trigger }: { trigger: string }) {
@@ -22,7 +20,8 @@ export function TomeBurst({ trigger }: { trigger: string }) {
       {PARTICLES.map((p) => (
         <motion.span
           key={p.id}
-          className="absolute font-display text-lg text-gold
+          style={{ fontSize: p.size }}
+          className="absolute font-display text-gold
           drop-shadow-[0_0_6px_rgba(184,146,42,0.6)]"
           initial={{
             opacity: 0,

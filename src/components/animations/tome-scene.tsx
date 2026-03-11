@@ -4,6 +4,7 @@ import { OpenTome } from '@/components/ui/icons';
 import { motion } from 'motion/react';
 import { PulseRings, TomeSparks } from '../effects';
 import { TomeBurst } from './tome-burst';
+import { TomeFlash } from './tome-flash';
 
 export function TomeScene({ trigger }: { trigger: string }) {
   return (
@@ -11,6 +12,7 @@ export function TomeScene({ trigger }: { trigger: string }) {
       <PulseRings />
       <TomeSparks />
 
+      <TomeFlash trigger={trigger} />
       <TomeBurst trigger={trigger} />
 
       <motion.div
