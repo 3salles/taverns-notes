@@ -8,11 +8,10 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import { GoogleIcon, OpenTome } from '@/components/ui/icons';
-
+import { BookIcon, GoogleIcon, OpenTome } from '@/components/ui/icons';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BookIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
@@ -30,17 +29,30 @@ export default function Auth() {
       <div className="relative flex basis-[55%] items-center justify-center overflow-hidden">
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-12">
           {/* brand */}
-          <div className="absolute left-10 top-10 flex items-center gap-2 animate-fade-up">
+          <motion.div
+            className="w-full max-w-90 p-8"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <BookIcon />
             <span className="font-display text-[1.05rem] font-bold">
               Taverns & Notes
             </span>
-          </div>
+          </motion.div>
 
           {/* scene */}
-          <div className="relative flex h-85 w-85 items-center justify-center">
+          <motion.div
+            className="relative flex h-85 w-85 items-center justify-center"
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
             <OpenTome />
-          </div>
+          </motion.div>
 
           {/* quote */}
           <div className="absolute bottom-12 left-0 right-0 px-12 text-center animate-fade-up">
@@ -82,112 +94,136 @@ export default function Auth() {
               <TabsTrigger value="signup">Criar conta</TabsTrigger>
             </TabsList>
             <TabsContent value="login">
-              <Form {...loginForm}>
-                <form className="space-y-4">
-                  <FormField
-                    control={loginForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="mestre@taverna.com" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={loginForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Senha</FormLabel>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <Form {...loginForm}>
+                  <form className="space-y-4">
+                    <FormField
+                      control={loginForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="mestre@taverna.com"
+                              {...field}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={loginForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
 
-                        <Link
-                          href="/forgot-password"
-                          className="text-text-muted hover:text-ember 
+                          <Link
+                            href="/forgot-password"
+                            className="text-text-muted hover:text-ember 
                           hover:underline underline-offset-4 transition-colors"
-                        >
-                          Esqueceu a senha?
-                        </Link>
+                          >
+                            Esqueceu a senha?
+                          </Link>
 
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            {...field}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              {...field}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
-                  <Button
-                    type="submit"
-                    className="w-full bg-ember hover:bg-ember-lite"
-                  >
-                    Entrar na campanha
-                  </Button>
-                </form>
-              </Form>
+                    <motion.div whileTap={{ scale: 0.97 }}>
+                      <Button
+                        type="submit"
+                        className="w-full bg-ember hover:bg-ember-lite"
+                      >
+                        Entrar na campanha
+                      </Button>
+                    </motion.div>
+                  </form>
+                </Form>
+              </motion.div>
             </TabsContent>
             <TabsContent value="signup">
-              <Form {...loginForm}>
-                <form className="space-y-4">
-                  <FormField
-                    control={loginForm.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Seu nome</FormLabel>
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <Form {...loginForm}>
+                  <form className="space-y-4">
+                    <FormField
+                      control={loginForm.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Seu nome</FormLabel>
 
-                        <FormControl>
-                          <Input placeholder="Como te chamamos?" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                          <FormControl>
+                            <Input placeholder="Como te chamamos?" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={loginForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
+                    <FormField
+                      control={loginForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
 
-                        <FormControl>
-                          <Input placeholder="mestre@taverna.com" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                          <FormControl>
+                            <Input
+                              placeholder="mestre@taverna.com"
+                              {...field}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={loginForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Senha</FormLabel>
+                    <FormField
+                      control={loginForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
 
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            {...field}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              {...field}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
-                  <Button
-                    type="submit"
-                    className="w-full bg-ember hover:bg-ember-lite"
-                  >
-                    Criar conta
-                  </Button>
-                </form>
-              </Form>
+                    <motion.div whileTap={{ scale: 0.97 }}>
+                      <Button
+                        type="submit"
+                        className="w-full bg-ember hover:bg-ember-lite"
+                      >
+                        Criar conta
+                      </Button>
+                    </motion.div>
+                  </form>
+                </Form>
+              </motion.div>
             </TabsContent>
           </Tabs>
 
