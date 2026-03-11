@@ -52,7 +52,7 @@ export default function Auth() {
             </p>
 
             <cite className="font-body text-[0.7rem] uppercase tracking-[0.12em] text-text-muted not-italic">
-              The Game Master`&rsquo`s Creed
+              {"The Game Master's Creed"}
             </cite>
           </div>
         </div>
@@ -108,20 +108,10 @@ export default function Auth() {
                       )}
                     />
                     <FormField
-                      control={loginForm.control}
                       name="password"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Senha</FormLabel>
-
-                          <Link
-                            href="/forgot-password"
-                            className="text-text-muted hover:text-ember 
-                          hover:underline underline-offset-4 transition-colors"
-                          >
-                            Esqueceu a senha?
-                          </Link>
-
                           <FormControl>
                             <Input
                               type="password"
@@ -129,6 +119,14 @@ export default function Auth() {
                               {...field}
                             />
                           </FormControl>
+                          <div className="flex justify-end">
+                            <Link
+                              href="/forgot-password"
+                              className="text-[0.76rem] text-text-muted hover:text-ember transition-colors"
+                            >
+                              Esqueceu a senha?
+                            </Link>
+                          </div>
                         </FormItem>
                       )}
                     />
