@@ -38,7 +38,11 @@ const buttonVariants = cva(
           'hover:bg-surface-2',
         ],
 
+        secondary: ['bg-surface-2', 'text-text', 'hover:bg-surface-2/80'],
+
         ghost: ['text-text', 'hover:bg-surface'],
+
+        icon: ['text-text-dim', 'hover:bg-surface-2'],
 
         link: ['text-ember', 'underline-offset-4', 'hover:underline'],
 
