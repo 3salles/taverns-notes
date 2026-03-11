@@ -1,32 +1,13 @@
 'use client';
 
-import { AuthHero } from '@/components/auth';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@/components/ui/form';
+import { AuthHero, LoginForm, RegisterForm } from '@/components/auth';
 import { GoogleIcon } from '@/components/ui/icons';
-import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AnimatePresence, motion } from 'motion/react';
-import Link from 'next/link';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 export default function Auth() {
   const [tab, setTab] = useState<'login' | 'signup'>('login');
-
-  const loginForm = useForm({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
-  });
 
   return (
     <section className="flex h-screen w-full bg-ink text-text font-body overflow-hidden">
@@ -68,152 +49,7 @@ export default function Auth() {
 
             <motion.div layout className="relative min-h-75">
               <AnimatePresence mode="wait">
-                {tab === 'login' && (
-                  <motion.div
-                    key="login"
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -18 }}
-                    transition={{ duration: 0.28, ease: 'easeOut' }}
-                  >
-                    <Form {...loginForm}>
-                      <form className="space-y-4">
-                        <FormField
-                          control={loginForm.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Email</FormLabel>
-                              <FormControl>
-                                <Input
-                                  size="lg"
-                                  placeholder="mestre@taverna.com"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Senha</FormLabel>
-                              <FormControl>
-                                <Input
-                                  size="lg"
-                                  type="password"
-                                  placeholder="••••••••"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <div className="flex justify-end">
-                                <Link
-                                  href="/forgot-password"
-                                  className="text-sm text-white hover:text-ember 
-                              transition-colors"
-                                >
-                                  Esqueceu a senha?
-                                </Link>
-                              </div>
-                            </FormItem>
-                          )}
-                        />
-
-                        <motion.div whileTap={{ scale: 0.97 }}>
-                          <Button
-                            type="submit"
-                            className="w-full bg-ember hover:bg-ember-lite text-base 
-                        h-12 mt-4"
-                            size="lg"
-                          >
-                            Entrar na campanha
-                          </Button>
-                        </motion.div>
-                      </form>
-                    </Form>
-                  </motion.div>
-                )}
-
-                {tab === 'signup' && (
-                  <motion.div
-                    key="signup"
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -18 }}
-                    transition={{ duration: 0.28, ease: 'easeOut' }}
-                  >
-                    <Form {...loginForm}>
-                      <form className="space-y-4">
-                        <FormField
-                          control={loginForm.control}
-                          name="name"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Seu nome</FormLabel>
-
-                              <FormControl>
-                                <Input
-                                  size="lg"
-                                  placeholder="Como te chamamos?"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={loginForm.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Email</FormLabel>
-
-                              <FormControl>
-                                <Input
-                                  size="lg"
-                                  placeholder="mestre@taverna.com"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={loginForm.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Senha</FormLabel>
-
-                              <FormControl>
-                                <Input
-                                  size="lg"
-                                  type="password"
-                                  placeholder="••••••••"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-
-                        <motion.div whileTap={{ scale: 0.97 }}>
-                          <Button
-                            type="submit"
-                            className="w-full bg-ember hover:bg-ember-lite text-base 
-                        h-12"
-                            size="lg"
-                          >
-                            Criar conta
-                          </Button>
-                        </motion.div>
-                      </form>
-                    </Form>
-                  </motion.div>
-                )}
+                {tab === 'login' ? <LoginForm /> : <RegisterForm />}
               </AnimatePresence>
             </motion.div>
           </Tabs>
@@ -233,7 +69,7 @@ export default function Auth() {
               transition-colors hover:border-text-dim hover:text-text cursor-pointer"
           >
             <GoogleIcon />
-            Continuar com Google
+            {tab === 'login' ? 'Continuar com Google' : 'Cadastrar com Google'}
           </button>
         </div>
       </div>
