@@ -39,14 +39,13 @@ export default function Auth() {
           }}
         />
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-12">
-          {/* brand */}
           <motion.div
-            className="w-full max-w-90 p-8"
+            className="absolute top-10 left-10 flex items-center gap-2"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <BookIcon />
+            <BookIcon className="text-ember" />
             <span className="font-display text-[1.05rem] font-bold">
               Taverns & Notes
             </span>
@@ -80,8 +79,9 @@ export default function Auth() {
         <div className="w-full max-w-90 p-8 animate-fade-up">
           <header>
             <h1 className="font-display text-2xl font-bold leading-tight mb-1">
-              Bem-vindo de volta, <br />
-              <em className="text-text-dim italic">Aventureiro!</em>
+              Bem-vindo de volta,
+              <br />
+              <em className="text-text-muted italic">Aventureiro!</em>
             </h1>
             <p className="mb-8 text-[0.88rem] text-text-dim">
               Entre para continuar sua campanha
