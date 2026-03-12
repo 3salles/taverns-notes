@@ -77,8 +77,8 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: #0d0c0a;
+  --color-foreground: #f5f0e8;
 
   /* ── Typography ── */
   --font-display: 'Playfair Display', serif;
@@ -87,57 +87,57 @@
   --font-mono: monospace;
 
   /* ── Direct palette for utility classes (bg-ink, text-ember, etc.) ── */
-  --color-ink: var(--ink);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-border-subtle: var(--border);
-  --color-border-strong: var(--border-2);
-  --color-text: var(--text);
-  --color-text-dim: var(--text-dim);
-  --color-text-muted: var(--text-muted);
-  --color-text-quote: var(--text-quote);
-  --color-ember: var(--ember);
-  --color-ember-lite: var(--ember-lite);
-  --color-gold: var(--gold);
-  --color-gold-lite: var(--gold-lite);
+  --color-ink: #0d0c0a;
+  --color-surface: #1a1510;
+  --color-surface-2: #221e18;
+  --color-border-subtle: #2e2820;
+  --color-border-strong: #3d3528;
+  --color-text: #f5f0e8;
+  --color-text-dim: #f2e8d0;
+  --color-text-muted: #7a6e5f;
+  --color-text-quote: #f2e8d0;
+  --color-ember: #c94c1a;
+  --color-ember-lite: #e8622a;
+  --color-gold: #b8922a;
+  --color-gold-lite: #d4aa40;
 
   /* ── shadcn/ui to Tailwind utilities ── */
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border-token);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-alert: var(--alert);
+  --color-card: #1a1510;
+  --color-card-foreground: #f5f0e8;
+  --color-popover: #221e18;
+  --color-popover-foreground: #f5f0e8;
+  --color-primary: #c94c1a;
+  --color-primary-foreground: #f5f0e8;
+  --color-secondary: #221e18;
+  --color-secondary-foreground: #f2e8d0;
+  --color-muted: #1a1510;
+  --color-muted-foreground: #7a6e5f;
+  --color-accent: #b8922a;
+  --color-accent-foreground: #0d0c0a;
+  --color-destructive: #b33a3a;
+  --color-border: #2e2820;
+  --color-input: #3d3528;
+  --color-ring: #c94c1a;
+  --color-chart-1: #c94c1a;
+  --color-chart-2: #b8922a;
+  --color-chart-3: #e8622a;
+  --color-chart-4: #d4aa40;
+  --color-chart-5: #7a6e5f;
+  --color-sidebar: #1a1510;
+  --color-sidebar-foreground: #f5f0e8;
+  --color-sidebar-primary: #c94c1a;
+  --color-sidebar-primary-foreground: #f5f0e8;
+  --color-sidebar-accent: #221e18;
+  --color-sidebar-accent-foreground: #f2e8d0;
+  --color-sidebar-border: #2e2820;
+  --color-sidebar-ring: #c94c1a;
+  --color-alert: #ff5c5c;
 
   /* ── Border radius ── */
-  --radius-sm: calc(var(--radius) - 1px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
 }
 
 body {

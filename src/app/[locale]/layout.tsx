@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Lora, Playfair_Display } from 'next/font/google';
+import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Toaster } from 'sonner';
@@ -33,6 +34,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>
@@ -41,7 +43,7 @@ export default async function LocaleLayout({
       text-white flex h-screen`}
         suppressHydrationWarning
       >
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
           <NuqsAdapter>
             {children}
             <Toaster position="top-right" />
