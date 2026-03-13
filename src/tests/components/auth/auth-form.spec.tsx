@@ -14,6 +14,12 @@ jest.mock('next-intl', () => ({
         or: 'ou',
         'googleButton.login': 'Continuar com Google',
         'googleButton.signup': 'Cadastrar com Google',
+        'validation.name.required': 'Nome é obrigatório',
+        'validation.name.min': 'Nome deve ter pelo menos 2 caracteres',
+        'validation.email.required': 'Email é obrigatório',
+        'validation.email.invalid': 'Email inválido',
+        'validation.password.required': 'Senha é obrigatória',
+        'validation.password.min': 'Senha deve ter pelo menos 8 caracteres',
       },
       authForm: {
         email: 'Email',
@@ -214,34 +220,91 @@ describe('AuthPage', () => {
         screen.getByRole('button', { name: /cadastrar com google/i })
       ).toBeVisible();
     });
-  });
 
-  describe('Signup form submission', () => {
-    const user = userEvent.setup();
+    describe('Signup form submission', () => {
+      const user = userEvent.setup();
 
-    const renderAndSwitchToSignup = async () => {
-      makeSut();
-      await user.click(screen.getByRole('tab', { name: 'Criar conta' }));
-    };
+      const renderAndSwitchToSignup = async () => {
+        makeSut();
+        await user.click(screen.getByRole('tab', { name: 'Criar conta' }));
+      };
 
-    it('should disable submit button when fields are empty', async () => {
-      await renderAndSwitchToSignup();
+      it('should disable submit button when fields are empty', async () => {
+        await renderAndSwitchToSignup();
 
-      expect(
-        screen.getByRole('button', { name: /criar conta/i })
-      ).toBeDisabled();
+        expect(
+          screen.getByRole('button', { name: /criar conta/i })
+        ).toBeDisabled();
+      });
+
+      it('should enable submit button when all fields  are filled', async () => {
+        await renderAndSwitchToSignup();
+
+        await user.type(screen.getByLabelText(/seu nome/i), 'Gandalf');
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+
+        expect(
+          screen.getByRole('button', { name: /criar conta/i })
+        ).toBeEnabled();
+      });
     });
 
-    it('should enable submit button when all fields  are filled', async () => {
-      await renderAndSwitchToSignup();
+    describe('Signup fields validation', () => {
+      const renderAndSwitchToSignup = async () => {
+        makeSut();
+        await user.click(screen.getByRole('tab', { name: 'Criar conta' }));
+      };
 
-      await user.type(screen.getByLabelText(/seu nome/i), 'Gandalf');
-      await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
-      await user.type(screen.getByLabelText(/senha/i), '12345678');
+      it('should show required error when name is blurred empty', async () => {
+        await renderAndSwitchToSignup();
 
-      expect(
-        screen.getByRole('button', { name: /criar conta/i })
-      ).toBeEnabled();
+        await user.click(screen.getByLabelText(/seu nome/i));
+        await user.tab();
+
+        expect(screen.getByText('Nome é obrigatório')).toBeVisible();
+      });
+
+      it('should show error when name has less than 2 characters on blur', async () => {
+        await renderAndSwitchToSignup();
+
+        await user.type(screen.getByLabelText(/seu nome/i), 'G');
+        await user.tab();
+
+        expect(
+          screen.getByText('Nome deve ter pelo menos 2 caracteres')
+        ).toBeVisible();
+      });
+
+      it('should show multiple errors when all fields are blurred empty', async () => {
+        await renderAndSwitchToSignup();
+
+        await user.click(screen.getByLabelText(/seu nome/i));
+        await user.tab();
+        await user.tab();
+        await user.tab();
+
+        expect(screen.getByText('Nome é obrigatório')).toBeVisible();
+        expect(screen.getByText('Email é obrigatório')).toBeVisible();
+        expect(screen.getByText('Senha é obrigatória')).toBeVisible();
+      });
+
+      it('should clear error after fixing field and resubmitting', async () => {
+        await renderAndSwitchToSignup();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf');
+        await user.click(screen.getByRole('button', { name: /criar conta/i }));
+
+        expect(screen.getByText('Email inválido')).toBeVisible();
+
+        await user.clear(screen.getByLabelText(/email/i));
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.type(screen.getByLabelText(/seu nome/i), 'Gandalf');
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+        await user.click(screen.getByRole('button', { name: /criar conta/i }));
+
+        expect(screen.queryByText('Email inválido')).not.toBeInTheDocument();
+      });
     });
   });
 });

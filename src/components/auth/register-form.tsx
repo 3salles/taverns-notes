@@ -2,16 +2,45 @@ import { createUserSchema } from '@/core/application/auth/create-user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form';
 import { Input } from '../ui/input';
 
 export const RegisterForm = () => {
   const t = useTranslations('authForm');
+  const tAuth = useTranslations('auth');
+
+  const schema = useMemo(
+    () =>
+      createUserSchema({
+        name: {
+          required: tAuth('validation.name.required'),
+          min: tAuth('validation.name.min'),
+        },
+        email: {
+          required: tAuth('validation.email.required'),
+          invalid: tAuth('validation.email.invalid'),
+        },
+        password: {
+          required: tAuth('validation.password.required'),
+          min: tAuth('validation.password.min'),
+        },
+      }),
+    [tAuth]
+  );
 
   const registerForm = useForm({
-    resolver: zodResolver(createUserSchema),
+    resolver: zodResolver(schema),
+    mode: 'onBlur',
     defaultValues: {
       name: '',
       email: '',
@@ -19,7 +48,7 @@ export const RegisterForm = () => {
     },
   });
 
-  const { isValid } = registerForm.formState;
+  const { isDirty } = registerForm.formState;
 
   return (
     <motion.div
@@ -30,7 +59,10 @@ export const RegisterForm = () => {
       transition={{ duration: 0.28, ease: 'easeOut' }}
     >
       <Form {...registerForm}>
-        <form className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={registerForm.handleSubmit(() => {})}
+        >
           <FormField
             control={registerForm.control}
             name="name"
@@ -45,6 +77,7 @@ export const RegisterForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -63,6 +96,7 @@ export const RegisterForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -82,6 +116,7 @@ export const RegisterForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -92,7 +127,7 @@ export const RegisterForm = () => {
               className="w-full bg-ember hover:bg-ember-lite text-base 
                         h-12"
               size="lg"
-              disabled={!isValid}
+              disabled={!isDirty}
             >
               {t('registerSubmit')}
             </Button>

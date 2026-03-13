@@ -11,6 +11,20 @@
     "googleButton": {
       "login": "Continue with Google",
       "signup": "Sign up with Google"
+    },
+    "validation": {
+      "name": {
+        "required": "Name is required",
+        "min": "Name must be at least 2 characters"
+      },
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email"
+      },
+      "password": {
+        "required": "Password is required",
+        "min": "Password must be at least 8 characters"
+      }
     }
   },
   "authForm": {
