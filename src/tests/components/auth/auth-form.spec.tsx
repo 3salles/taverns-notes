@@ -159,6 +159,90 @@ describe('AuthPage', () => {
         screen.getByRole('button', { name: /continuar com google/i })
       ).toBeVisible();
     });
+
+    describe('Login form submission', () => {
+      const user = userEvent.setup();
+
+      it('should show required error when email is empty on submit', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(screen.getByText('Email é obrigatório')).toBeVisible();
+      });
+
+      it('should show error when email format is invalid', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf');
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(screen.getByText('Email inválido')).toBeVisible();
+      });
+
+      it('should not show email error when email is valid', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(screen.queryByText('Email inválido')).not.toBeInTheDocument();
+        expect(
+          screen.queryByText('Email é obrigatório')
+        ).not.toBeInTheDocument();
+      });
+
+      it('should show required error when password is empty on submit', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(screen.getByText('Senha é obrigatória')).toBeVisible();
+      });
+
+      it('should show error when password is less than 8 characters', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.type(screen.getByLabelText(/senha/i), '1234');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(
+          screen.getByText('Senha deve ter pelo menos 8 caracteres')
+        ).toBeVisible();
+      });
+
+      it('should not show password error when password has 8+ characters', async () => {
+        makeSut();
+
+        await user.type(screen.getByLabelText(/email/i), 'gandalf@taverna.com');
+        await user.type(screen.getByLabelText(/senha/i), '12345678');
+        await user.click(
+          screen.getByRole('button', { name: /entrar na campanha/i })
+        );
+
+        expect(
+          screen.queryByText('Senha é obrigatória')
+        ).not.toBeInTheDocument();
+        expect(
+          screen.queryByText('Senha deve ter pelo menos 8 caracteres')
+        ).not.toBeInTheDocument();
+      });
+    });
   });
 
   describe('Signup tab', () => {
